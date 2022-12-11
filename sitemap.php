@@ -69,7 +69,7 @@ final class Sitemap_generator
         $this->get_all_images($this->products_urls);
         $this->generate_xml($this->images_urls,
             0.5,
-            'images`'
+            'images'
         );
 
         //imgs builder
@@ -78,6 +78,10 @@ final class Sitemap_generator
             $this->cms_urls,
             0.5,
             'cms'
+        );
+
+        $this->generate_main_xml(
+            ['category','products','images','cms']
         );
 
     }
@@ -232,13 +236,27 @@ final class Sitemap_generator
     private function generate_xml(array $list, float $prority, string $filename) : void
     {
         $xml = new SimpleXMLElement('<xml/>');
-        Header('Content-type: text/xml');
         foreach ($list as $element) {
             $item = $xml->addChild('item');
             $url = $item->addChild('url', $element['url']);
             $priority = $item->addChild('priority', $prority);
         }
         $xml->asXML('./'.$filename.'.xml');
+    }
+
+    /*
+    *   Generate xml file.
+    *
+    */
+    private function generate_main_xml(array $list) : void
+    {
+        $xml = new SimpleXMLElement('<xml/>');
+        foreach ($list as $element){
+            $item = $xml->addChild('item');
+            //you should check how it will be generated in your project, probably you have to use __DIR__
+            $url = $item->addChild('url', _PS_BASE_URL_.'/presta/sitemap/'.$element.'.xml');
+        }
+        $xml->asXML('./sitemap.xml');
     }
 }
 
