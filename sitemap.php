@@ -103,7 +103,7 @@ final class Sitemap_generator
             ];
             array_push($categories_urls, $category_item);
         }
-        $this->categories_urls = $categories_urls;git b
+        $this->categories_urls = $categories_urls;
     }
 
 
@@ -207,7 +207,7 @@ final class Sitemap_generator
     * Checking link code.
     * Return true if site code is 200.
     */
-    private function check_urls(array $url) : boolean
+    private function check_urls(array $url) : bool
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
